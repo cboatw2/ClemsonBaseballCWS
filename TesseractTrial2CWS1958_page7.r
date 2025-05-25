@@ -61,6 +61,7 @@ print(lines_clean)
 
 # Print cleaned lines to inspect
 cat(paste(lines_clean, collapse = "\n"))
+
 #Manually define player names
 clemson_players <- c("Hendley", "Bagwell", "Spires", "Wilson", "DeBerry", "Hoffman", "Coker", "Burnette", "Norris", "Stowe", "McDonald")
 michiganstate_players <- c("Golden", "Warner", "Palamara", "Gilbert", "Look", "Russell", "Stifler", "Meredith", "Fleser", "Perranoski", "Curley")
@@ -73,8 +74,6 @@ all_players <- c(clemson_players, michiganstate_players)
 
 print(all_players)
 
-#Group
-player_data <- extract_player_blocks(lines_clean, all_players)
 
 #Display for review
 for (name in names(player_data)) {
@@ -107,5 +106,26 @@ extract_player_blocks <- function(lines, player_names) {
     return(player_blocks)
 }
 
+#Group
+player_data <- extract_player_blocks(lines_clean, all_players)
+
 print(player_data)
+
+#Previous code not matching players to stats
+
+#Test matching logic on a single line
+line <- "wilson, lf 5 2 0  kh 0 0"
+tokens <- strsplit(line, "\\s+")[[1]]
+print (tokens)
+#Correctly splits the strings of the line
+
+#Use fuzzy matching
+library(stringr)
+line <- "wilson, lf 5 2 0  kh 0 0"
+if (str_detect(line, regex("[a-z]+,\\s+[a-z]{1,2}\\b", ignore_case = TRUE))) {
+  print("Potential player line")
+}
+
+
+
 
